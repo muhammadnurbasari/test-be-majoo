@@ -4,8 +4,14 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-//CheckAuthHash - validate encrypt Authorization
-func CheckAuthHash(password, hash string) bool {
+//CheckPasswordHash - validate encrypt password
+func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+
+//HashPassword - Encrypt password
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
 }
