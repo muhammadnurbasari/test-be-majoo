@@ -1,15 +1,120 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Service bdj",
-        "title": "SERVICE BDJ",
+        "description": "TEST BE MAJOO",
+        "title": "TEST BE MAJOO",
         "contact": {
             "name": "Muhammadnurbasari",
             "email": "m.nurbasari@gmail.com"
         },
-        "version": "0.1.5"
+        "version": "0.0.1"
     },
-    "paths": {},
+    "paths": {
+        "/user/login": {
+            "post": {
+                "description": "Login endpoint to get Authorization token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login by username and password, please try using POSTMAN",
+                "operationId": "login-username-password",
+                "parameters": [
+                    {
+                        "description": "Auth info",
+                        "name": "authinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loginModel.ReqLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userDTO.ResLoginResult"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/userDTO.ResNotFound"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "loginModel.ReqLogin": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "loginModel.ResLogin": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "userDTO.ResLoginResult": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "string",
+                    "example": "Login Success"
+                },
+                "result": {
+                    "$ref": "#/definitions/loginModel.ResLogin"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "userDTO.ResNotFound": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "string",
+                    "example": "Please Registration Your Account !"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 404
+                }
+            }
+        }
+    },
     "securityDefinitions": {
         "ApiKeyAuth": {
             "type": "apiKey",

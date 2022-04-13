@@ -1,11 +1,80 @@
+definitions:
+  loginModel.ReqLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  loginModel.ResLogin:
+    properties:
+      name:
+        type: string
+      token:
+        type: string
+      userid:
+        type: integer
+      username:
+        type: string
+    type: object
+  userDTO.ResLoginResult:
+    properties:
+      messages:
+        example: Login Success
+        type: string
+      result:
+        $ref: '#/definitions/loginModel.ResLogin'
+      status:
+        example: 200
+        type: integer
+    type: object
+  userDTO.ResNotFound:
+    properties:
+      messages:
+        example: Please Registration Your Account !
+        type: string
+      status:
+        example: 404
+        type: integer
+    type: object
 info:
   contact:
     email: m.nurbasari@gmail.com
     name: Muhammadnurbasari
-  description: Service bdj
-  title: SERVICE BDJ
-  version: 0.1.5
-paths: {}
+  description: TEST BE MAJOO
+  title: TEST BE MAJOO
+  version: 0.0.1
+paths:
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: Login endpoint to get Authorization token
+      operationId: login-username-password
+      parameters:
+      - description: Auth info
+        in: body
+        name: authinfo
+        required: true
+        schema:
+          $ref: '#/definitions/loginModel.ReqLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userDTO.ResLoginResult'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/userDTO.ResNotFound'
+      summary: Login by username and password, please try using POSTMAN
+      tags:
+      - Authentication
 securityDefinitions:
   ApiKeyAuth:
     in: header
