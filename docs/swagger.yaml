@@ -20,6 +20,87 @@ definitions:
       username:
         type: string
     type: object
+  reportDTO.ResInfoOmzetMerchant:
+    properties:
+      messages:
+        example: Success
+        type: string
+      result:
+        $ref: '#/definitions/reportModel.ResOmzetMerchant'
+      status:
+        example: 200
+        type: integer
+    type: object
+  reportDTO.ResInfoOmzetOutlet:
+    properties:
+      messages:
+        example: Success
+        type: string
+      result:
+        $ref: '#/definitions/reportModel.ResOmzetOutlet'
+      status:
+        example: 200
+        type: integer
+    type: object
+  reportModel.DataOmzetMerchants:
+    properties:
+      merchant_name:
+        type: string
+      name:
+        type: string
+      omzet:
+        type: number
+      tanggal:
+        type: string
+      userid:
+        type: integer
+    type: object
+  reportModel.DataOmzetOutlets:
+    properties:
+      merchant_name:
+        type: string
+      name:
+        type: string
+      omzet:
+        type: number
+      outlet_name:
+        type: string
+      tanggal:
+        type: string
+      userid:
+        type: integer
+    type: object
+  reportModel.ReqOmzetMerchant:
+    properties:
+      row_per_page:
+        type: integer
+      start:
+        type: integer
+      userid:
+        type: integer
+    type: object
+  reportModel.ResOmzetMerchant:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/reportModel.DataOmzetMerchants'
+        type: array
+      row_per_page:
+        type: integer
+      start:
+        type: integer
+    type: object
+  reportModel.ResOmzetOutlet:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/reportModel.DataOmzetOutlets'
+        type: array
+      row_per_page:
+        type: integer
+      start:
+        type: integer
+    type: object
   userDTO.ResLoginResult:
     properties:
       messages:
@@ -34,7 +115,7 @@ definitions:
   userDTO.ResNotFound:
     properties:
       messages:
-        example: Please Registration Your Account !
+        example: Wrong Username
         type: string
       status:
         example: 404
@@ -48,6 +129,50 @@ info:
   title: TEST BE MAJOO
   version: 0.0.1
 paths:
+  /report/omzet-merchant:
+    post:
+      consumes:
+      - application/json
+      description: get data and pagination omzet merchants
+      parameters:
+      - description: page info
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/reportModel.ReqOmzetMerchant'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/reportDTO.ResInfoOmzetMerchant'
+      summary: get data and pagination omzet merchants
+      tags:
+      - Reports
+  /report/omzet-outlet:
+    post:
+      consumes:
+      - application/json
+      description: get data and pagination omzet merchants
+      parameters:
+      - description: page info
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/reportModel.ReqOmzetMerchant'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/reportDTO.ResInfoOmzetOutlet'
+      summary: get data and pagination omzet merchants
+      tags:
+      - Reports
   /user/login:
     post:
       consumes:

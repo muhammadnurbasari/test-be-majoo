@@ -26,6 +26,74 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/report/omzet-merchant": {
+            "post": {
+                "description": "get data and pagination omzet merchants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "get data and pagination omzet merchants",
+                "parameters": [
+                    {
+                        "description": "page info",
+                        "name": "pageInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/reportModel.ReqOmzetMerchant"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/reportDTO.ResInfoOmzetMerchant"
+                        }
+                    }
+                }
+            }
+        },
+        "/report/omzet-outlet": {
+            "post": {
+                "description": "get data and pagination omzet merchants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "get data and pagination omzet merchants",
+                "parameters": [
+                    {
+                        "description": "page info",
+                        "name": "pageInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/reportModel.ReqOmzetMerchant"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/reportDTO.ResInfoOmzetOutlet"
+                        }
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "description": "Login endpoint to get Authorization token",
@@ -101,6 +169,129 @@ var doc = `{
                 }
             }
         },
+        "reportDTO.ResInfoOmzetMerchant": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "result": {
+                    "$ref": "#/definitions/reportModel.ResOmzetMerchant"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "reportDTO.ResInfoOmzetOutlet": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "string",
+                    "example": "Success"
+                },
+                "result": {
+                    "$ref": "#/definitions/reportModel.ResOmzetOutlet"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "reportModel.DataOmzetMerchants": {
+            "type": "object",
+            "properties": {
+                "merchant_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "omzet": {
+                    "type": "number"
+                },
+                "tanggal": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "reportModel.DataOmzetOutlets": {
+            "type": "object",
+            "properties": {
+                "merchant_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "omzet": {
+                    "type": "number"
+                },
+                "outlet_name": {
+                    "type": "string"
+                },
+                "tanggal": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "reportModel.ReqOmzetMerchant": {
+            "type": "object",
+            "properties": {
+                "row_per_page": {
+                    "type": "integer"
+                },
+                "start": {
+                    "type": "integer"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "reportModel.ResOmzetMerchant": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/reportModel.DataOmzetMerchants"
+                    }
+                },
+                "row_per_page": {
+                    "type": "integer"
+                },
+                "start": {
+                    "type": "integer"
+                }
+            }
+        },
+        "reportModel.ResOmzetOutlet": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/reportModel.DataOmzetOutlets"
+                    }
+                },
+                "row_per_page": {
+                    "type": "integer"
+                },
+                "start": {
+                    "type": "integer"
+                }
+            }
+        },
         "userDTO.ResLoginResult": {
             "type": "object",
             "properties": {
@@ -122,7 +313,7 @@ var doc = `{
             "properties": {
                 "messages": {
                     "type": "string",
-                    "example": "Please Registration Your Account !"
+                    "example": "Wrong Username"
                 },
                 "status": {
                     "type": "integer",
